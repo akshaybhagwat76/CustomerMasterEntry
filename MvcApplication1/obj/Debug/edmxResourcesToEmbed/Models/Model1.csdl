@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="city">
+    <Key>
+      <PropertyRef Name="city_id" />
+    </Key>
+    <Property Name="city_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="city_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="state_id" Type="Int32" />
+    <NavigationProperty Name="state" Relationship="Self.FK_city_state" FromRole="city" ToRole="state" />
+    <NavigationProperty Name="students" Relationship="Self.FK_student_city" FromRole="city" ToRole="student" />
+  </EntityType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="country_id" />
+    </Key>
+    <Property Name="country_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="country_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="states" Relationship="Self.FK_state_country" FromRole="country" ToRole="state" />
+    <NavigationProperty Name="students" Relationship="Self.FK_student_country" FromRole="country" ToRole="student" />
+  </EntityType>
+  <EntityType Name="state">
+    <Key>
+      <PropertyRef Name="state_id" />
+    </Key>
+    <Property Name="state_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="state_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="country_id" Type="Int32" />
+    <NavigationProperty Name="city" Relationship="Self.FK_city_state" FromRole="state" ToRole="city" />
+    <NavigationProperty Name="country" Relationship="Self.FK_state_country" FromRole="state" ToRole="country" />
+    <NavigationProperty Name="students" Relationship="Self.FK_student_state" FromRole="state" ToRole="student" />
+  </EntityType>
+  <EntityType Name="student">
+    <Key>
+      <PropertyRef Name="student_id" />
+    </Key>
+    <Property Name="student_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="student_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="country_id" Type="Int32" />
+    <Property Name="city_id" Type="Int32" />
+    <Property Name="state_id" Type="Int32" />
+    <Property Name="birthdate" Type="DateTime" Precision="3" />
+    <Property Name="hobbies" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="city" Relationship="Self.FK_student_city" FromRole="student" ToRole="city" />
+    <NavigationProperty Name="country" Relationship="Self.FK_student_country" FromRole="student" ToRole="country" />
+    <NavigationProperty Name="state" Relationship="Self.FK_student_state" FromRole="student" ToRole="state" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_city_state">
+    <End Role="state" Type="Self.state" Multiplicity="1" />
+    <End Role="city" Type="Self.city" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="state">
+        <PropertyRef Name="state_id" />
+      </Principal>
+      <Dependent Role="city">
+        <PropertyRef Name="city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_student_city">
+    <End Role="city" Type="Self.city" Multiplicity="0..1" />
+    <End Role="student" Type="Self.student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="city">
+        <PropertyRef Name="city_id" />
+      </Principal>
+      <Dependent Role="student">
+        <PropertyRef Name="city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_state_country">
+    <End Role="country" Type="Self.country" Multiplicity="0..1" />
+    <End Role="state" Type="Self.state" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="country">
+        <PropertyRef Name="country_id" />
+      </Principal>
+      <Dependent Role="state">
+        <PropertyRef Name="country_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_student_country">
+    <End Role="country" Type="Self.country" Multiplicity="0..1" />
+    <End Role="student" Type="Self.student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="country">
+        <PropertyRef Name="country_id" />
+      </Principal>
+      <Dependent Role="student">
+        <PropertyRef Name="country_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_student_state">
+    <End Role="state" Type="Self.state" Multiplicity="0..1" />
+    <End Role="student" Type="Self.student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="state">
+        <PropertyRef Name="state_id" />
+      </Principal>
+      <Dependent Role="student">
+        <PropertyRef Name="state_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="demoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cities" EntityType="Self.city" />
+    <EntitySet Name="countries" EntityType="Self.country" />
+    <EntitySet Name="states" EntityType="Self.state" />
+    <EntitySet Name="students" EntityType="Self.student" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="FK_city_state" Association="Self.FK_city_state">
+      <End Role="state" EntitySet="states" />
+      <End Role="city" EntitySet="cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_student_city" Association="Self.FK_student_city">
+      <End Role="city" EntitySet="cities" />
+      <End Role="student" EntitySet="students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_state_country" Association="Self.FK_state_country">
+      <End Role="country" EntitySet="countries" />
+      <End Role="state" EntitySet="states" />
+    </AssociationSet>
+    <AssociationSet Name="FK_student_country" Association="Self.FK_student_country">
+      <End Role="country" EntitySet="countries" />
+      <End Role="student" EntitySet="students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_student_state" Association="Self.FK_student_state">
+      <End Role="state" EntitySet="states" />
+      <End Role="student" EntitySet="students" />
+    </AssociationSet>
+    <EntitySet Name="Departments" EntityType="demoModel.Department" />
+    <EntitySet Name="Employees" EntityType="demoModel.Employee" />
+    <EntitySet Name="Sites" EntityType="demoModel.Site" />
+    <AssociationSet Name="FK_Employee_Department" Association="demoModel.FK_Employee_Department">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <EntitySet Name="Addresses" EntityType="demoModel.Address" />
+    <EntitySet Name="Customers" EntityType="demoModel.Customer" />
+    <EntitySet Name="payments" EntityType="demoModel.payment" />
+    <AssociationSet Name="FK_Address_Customers" Association="demoModel.FK_Address_Customers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_payment_Customers" Association="demoModel.FK_payment_Customers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="payment" EntitySet="payments" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Employees" Relationship="demoModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Department" Relationship="demoModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
+  </EntityType>
+  <EntityType Name="Site">
+    <Key>
+      <PropertyRef Name="SiteId" />
+    </Key>
+    <Property Name="SiteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <Property Name="SiteName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Employee_Department">
+    <End Type="demoModel.Department" Role="Department" Multiplicity="0..1" />
+    <End Type="demoModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="add_id" />
+    </Key>
+    <Property Name="add_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="address1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="c_id" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="demoModel.FK_Address_Customers" FromRole="Address" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="c_id" />
+    </Key>
+    <Property Name="c_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="c_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="c_mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Addresses" Relationship="demoModel.FK_Address_Customers" FromRole="Customer" ToRole="Address" />
+    <NavigationProperty Name="payments" Relationship="demoModel.FK_payment_Customers" FromRole="Customer" ToRole="payment" />
+  </EntityType>
+  <EntityType Name="payment">
+    <Key>
+      <PropertyRef Name="pmt_id" />
+    </Key>
+    <Property Name="pmt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="paymentamt" Type="Double" />
+    <Property Name="c_id" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="demoModel.FK_payment_Customers" FromRole="payment" ToRole="Customer" />
+  </EntityType>
+  <Association Name="FK_Address_Customers">
+    <End Type="demoModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="demoModel.Address" Role="Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="c_id" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="c_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_payment_Customers">
+    <End Type="demoModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="demoModel.payment" Role="payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="c_id" />
+      </Principal>
+      <Dependent Role="payment">
+        <PropertyRef Name="c_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

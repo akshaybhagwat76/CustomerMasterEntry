@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<center>
+    <div class="container" style="width:40%;margin-top:2%">
+        <table>
+            <tr>
+                <td colspan="2"><h2> <center>Customer Info</center></h2></td>
+            </tr>
+            <tr>
+                <td>Customer email</td>
+                <td>
+                    <input type="text" class="form-control input-sm" id="email">
+                    <br />
+                </td>
+            </tr>
+
+            <tr>
+                <td>Customer mobile</td>
+                <td>
+                    <input type="number" class="form-control input-sm" id="mobile">
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div style="padding:10px 0; text-align:right">
+                        <input id="submit" type="button" value="Save Order" class="btn btn-warning" style="padding:10px 20px" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <br />
+        <div class="address-details">
+            <h2>Address Details</h2>
+            <input type="button" id="btnAddress" value="+Add" class="btn btn-success" />
+            <table class="table table-responsive" id="tblAddress">
+                <tr>
+                    <td>Address</td>
+                </tr>
+                <tr class="mycontainer" id="mainrow">
+
+                    <td>
+                        <input type="text" id="txtadd" />
+                    </td>
+                    <td>
+                        <input type="button" id="btnAremove" onclick="removeBtn();" value="remove" style="width:80px" class="btn btn-danger" />
+                    </td>
+                        
+                </tr>
+               
+            </table>
+            
+        </div>
+    </div>
+</center>
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/main.js"></script>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e7ae6fb0db9e4c8aaf1bbe7f379aa4cc" Name="Diagram1">
+        <EntityTypeShape EntityType="demoModel.city" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoModel.country" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoModel.state" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoModel.student" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoModel.user" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="demoModel.FK_city_state" ManuallyRouted="false" />
+        <AssociationConnector Association="demoModel.FK_student_city" ManuallyRouted="false" />
+        <AssociationConnector Association="demoModel.FK_state_country" ManuallyRouted="false" />
+        <AssociationConnector Association="demoModel.FK_student_country" ManuallyRouted="false" />
+        <AssociationConnector Association="demoModel.FK_student_state" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="demoModel.Department" Width="1.5" PointX="5.75" PointY="6.125" />
+        <EntityTypeShape EntityType="demoModel.Employee" Width="1.5" PointX="8" PointY="5.875" />
+        <EntityTypeShape EntityType="demoModel.Site" Width="1.5" PointX="0.75" PointY="7.75" />
+        <AssociationConnector Association="demoModel.FK_Employee_Department" />
+        <EntityTypeShape EntityType="demoModel.Address" Width="1.5" PointX="5.625" PointY="11.625" />
+        <EntityTypeShape EntityType="demoModel.Customer" Width="1.5" PointX="3.375" PointY="10.25" />
+        <EntityTypeShape EntityType="demoModel.payment" Width="1.5" PointX="5.625" PointY="9" />
+        <AssociationConnector Association="demoModel.FK_Address_Customers" />
+        <AssociationConnector Association="demoModel.FK_payment_Customers" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
